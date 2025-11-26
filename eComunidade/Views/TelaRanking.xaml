@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:eComunidade.ViewModels"
+             x:Class="eComunidade.Views.TelaRanking"
+             Title="Ranking da Comunidade"
+             BackgroundColor="#EBF5FF"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <vm:RankingViewModel />
+    </ContentPage.BindingContext>
+
+    <!-- Estrutura do Grid: Cabeçalho (Auto), Conteúdo (Resto), Barra Inferior (60) -->
+    <Grid RowDefinitions="Auto, *, 60">
+
+        <!-- CABEÇALHO (Grid.Row="0") -->
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto, Auto" Padding="20, 30, 20, 10" BackgroundColor="#EBF5FF">
+
+            <Label Grid.Column="0" Text="Ranking" FontSize="28" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Start" />
+
+            <Image Grid.Column="1" Source="profile.png" WidthRequest="35" HeightRequest="35" Margin="0, 0, 15, 0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToProfileCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Image Grid.Column="2" Source="menu.png" WidthRequest="25" HeightRequest="25" VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenMenuCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+        </Grid>
+
+        <!-- CONTEÚDO PRINCIPAL (Grid.Row="1") -->
+        <ScrollView Grid.Row="1" Padding="20, 10, 20, 10">
+            <VerticalStackLayout Spacing="15">
+
+                <Label Text="Top 10" FontSize="18" TextColor="#333333" Margin="0, 10, 0, 0"/>
+
+                <CollectionView ItemsSource="{Binding TopRanking}" HeightRequest="450">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="15" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:RankItem">
+
+                            <Frame Padding="15" 
+                                   CornerRadius="10" 
+                                   HasShadow="True" 
+                                   BorderColor="Transparent" 
+                                   HeightRequest="90"
+                                   BackgroundColor="{Binding CorDestaque, TargetNullValue=White}">
+
+                                <Frame.Shadow>
+                                    <Shadow Brush="Gray" Offset="3,3" Radius="8" Opacity="0.3" />
+                                </Frame.Shadow>
+
+                                <Grid ColumnDefinitions="Auto, *, Auto">
+
+                                    <Grid Grid.Column="0" ColumnDefinitions="Auto, Auto" ColumnSpacing="15" VerticalOptions="Center" Margin="0, 0, 15, 0">
+                                        <Frame Grid.Column="0" Padding="0" CornerRadius="30" HasShadow="False" WidthRequest="50" HeightRequest="50" BackgroundColor="#DDDDDD">
+                                            <Image Source="{Binding AvatarUrl}" HeightRequest="40" WidthRequest="40" Aspect="AspectFill" />
+                                        </Frame>
+                                    </Grid>
+
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                        <Label Text="{Binding NomeUsuario}" 
+                                               FontSize="16" 
+                                               FontAttributes="Bold"
+                                               TextColor="#333333" />
+                                        <BoxView HeightRequest="5" 
+                                                 WidthRequest="100" 
+                                                 HorizontalOptions="Start"
+                                                 BackgroundColor="#4A90E2" 
+                                                 Margin="0, 5, 0, 0" />
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" Spacing="5">
+                                        <Label Text="{Binding Posicao, StringFormat='#{0}'}" 
+                                               FontSize="18" 
+                                               FontAttributes="Bold"
+                                               TextColor="#333333" 
+                                               HorizontalOptions="End" />
+                                        <Label Text="{Binding Pontos, StringFormat='{0} pts'}" 
+                                               FontSize="14" 
+                                               TextColor="#666666" 
+                                               HorizontalOptions="End"/>
+                                    </VerticalStackLayout>
+
+                                </Grid>
+
+                            </Frame>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Button Text="{Binding PosicaoUsuario.NomeUsuario, StringFormat='{0} - #{PosicaoUsuario.Posicao}'}"
+                        Command="{Binding IrParaMinhaPosicaoCommand}"
+                        BackgroundColor="#4A90E2" 
+                        TextColor="White" 
+                        CornerRadius="25" 
+                        HeightRequest="50"
+                        FontSize="18"
+                        Margin="0, 10, 0, 20"
+                        HorizontalOptions="FillAndExpand" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border Grid.Row="2" BackgroundColor="White" StrokeShape="RoundRectangle 40,40,0,0"
+                StrokeThickness="0" VerticalOptions="EndAndExpand" Padding="0,15,0,9">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,-5" Radius="10" Opacity="0.2" />
+            </Border.Shadow>
+            <Grid ColumnDefinitions="*,*,*" HorizontalOptions="FillAndExpand">
+
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Image Source="home.png" HeightRequest="23" WidthRequest="23" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label Text="Início" FontSize="10" TextColor="#226487" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToHomeCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Image Source="add.png" HeightRequest="23" WidthRequest="23" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label Text="Adicionar" FontSize="10" TextColor="#226487" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToAddCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Image Source="heart.png" HeightRequest="23" WidthRequest="23" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label Text="Dicas" FontSize="10" TextColor="#226487" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateDicasCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+            </Grid>
+        </Border>
+
+    </Grid>
+</ContentPage>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:eComunidade.ViewModels"
+             x:Class="eComunidade.Views.TelaCadastro"
+             Title="Cadastro"
+             BackgroundColor="#2A6487"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.BindingContext>
+        <vm:CadastroViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, *" RowSpacing="0" VerticalOptions="FillAndExpand">
+
+        <VerticalStackLayout Grid.Row="0" HorizontalOptions="Center" Margin="0,50,0,20" Spacing="5">
+            <Image Source="logo.png" HeightRequest="80" WidthRequest="800" Aspect="AspectFit" />
+        </VerticalStackLayout>
+
+        <Border Grid.Row="1"
+                BackgroundColor="White"
+                StrokeShape="RoundRectangle 20,20,0,0"
+                StrokeThickness="0"
+                VerticalOptions="FillAndExpand"
+                Padding="30, 40">
+
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,-5" Radius="10" Opacity="0.1" />
+            </Border.Shadow>
+
+            <ScrollView VerticalScrollBarVisibility="Never">
+                <VerticalStackLayout Spacing="20">
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Cadastre-se para ficar por dentro de eventos, dicas e ocorrências de sua comunidade!"
+                               FontSize="14"
+                               TextColor="#333333"
+                               HorizontalTextAlignment="Center"
+                               Margin="0,0,0,5" />
+                        <BoxView HeightRequest="2"
+                                 WidthRequest="50" Color="#66A5ED" HorizontalOptions="Center"
+                                 Margin="0,0,0,15" />
+                    </VerticalStackLayout>
+
+
+                    <Border BackgroundColor="#F0F8FF" StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#DDDDDD" Padding="10,5">
+                        <Entry Placeholder="Nome Completo" Text="{Binding NomeCompleto}" PlaceholderColor="#AAAAAA" />
+                    </Border>
+
+                    <Border BackgroundColor="#F0F8FF" StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#DDDDDD" Padding="10,5">
+                        <Entry Placeholder="Email" Text="{Binding Email}" Keyboard="Email" PlaceholderColor="#AAAAAA" />
+                    </Border>
+
+                    <Border BackgroundColor="#F0F8FF" StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#DDDDDD" Padding="10,5">
+                        <Entry Placeholder="Telefone/celular" Text="{Binding Telefone}" Keyboard="Telephone" PlaceholderColor="#AAAAAA" />
+                    </Border>
+
+                    <Border BackgroundColor="#F0F8FF" StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#DDDDDD" Padding="10,5">
+                        <Entry Placeholder="CEP" Text="{Binding CEP}" Keyboard="Numeric" PlaceholderColor="#AAAAAA" />
+                    </Border>
+
+                    <Border BackgroundColor="#F0F8FF" StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#DDDDDD" Padding="10,5">
+                        <Entry Placeholder="Senha" Text="{Binding Senha}" IsPassword="True" PlaceholderColor="#AAAAAA" />
+                    </Border>
+
+                    <Button Text="Cadastrar"
+                            Command="{Binding CadastrarCommand}"
+                            BackgroundColor="#226487"
+                            TextColor="White"
+                            FontSize="18"
+                            CornerRadius="10"
+                            Margin="0,30,0,10"
+                            HeightRequest="50"/>
+
+                    <Label Text="Continuar sem cadastro"
+                           FontSize="14"
+                           TextColor="#226487"
+                           HorizontalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ContinuarSemCadastroCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </Border>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:eComunidade.ViewModels"
+             x:Class="eComunidade.Views.TelaEventos"
+             Title="Eventos"
+             BackgroundColor="#EBF5FF">
+
+    <ContentPage.BindingContext>
+        <vm:EventosViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, Auto, *, 60"
+          ColumnDefinitions="*"
+          RowSpacing="0"
+          ColumnSpacing="0">
+
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="20,15,20,0">
+            <Label Grid.Column="0" Text="Eventos" FontSize="28" FontAttributes="Bold" TextColor="#226487" VerticalOptions="Center" HorizontalOptions="Start" />
+            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="10">
+                <Image Source="profile.png" HeightRequest="45" WidthRequest="45" Aspect="AspectFit" HorizontalOptions="Center">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToProfileCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image Source="menu.png" HeightRequest="30" WidthRequest="30" Aspect="AspectFit" HorizontalOptions="Center">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleMenuCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </HorizontalStackLayout>
+        </Grid>
+
+        <Label Grid.Row="1" Text="Hoje" FontSize="20" FontAttributes="Bold" TextColor="#333333" Margin="20,20,20,10" />
+
+        <CollectionView Grid.Row="2" ItemsSource="{Binding Eventos}" Margin="20,0,20,10" VerticalOptions="FillAndExpand">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 15" StrokeThickness="0" Padding="15">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="5,5" Radius="10" Opacity="0.1" />
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto, Auto" RowSpacing="5">
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Titulo}" FontSize="18" FontAttributes="Bold" TextColor="#333333" />
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding HoraFormatada}" FontSize="14" TextColor="#666666" HorizontalOptions="End" VerticalOptions="Center" />
+
+                            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Descricao}" FontSize="14" TextColor="#666666" LineBreakMode="WordWrap" />
+
+                            <Label Grid.Row="2" Grid.Column="0" Text="{Binding Local}" FontSize="14" FontAttributes="Bold" TextColor="#333333" VerticalOptions="Center" />
+
+                            <HorizontalStackLayout Grid.Row="3" Grid.Column="0" Spacing="10">
+                                <Label Text="{Binding Data, StringFormat='{0:dd/MM/yyyy}'}" FontSize="12" TextColor="#666666" VerticalOptions="Center" />
+                                <Label Text="{Binding Duracao, StringFormat='Duração: {0:h\\:mm}'}" FontSize="12" TextColor="#666666" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" HorizontalOptions="End" Spacing="5">
+                                <Label Text="{Binding QtdeVagasRestantes, StringFormat='{0} vagas'}" FontSize="14" FontAttributes="Bold" TextColor="#226487" HorizontalOptions="End" />
+                                <Label Text="{Binding QtdeVoluntarios, StringFormat='{0} confirmados'}" FontSize="12" TextColor="#666666" HorizontalOptions="End" />
+
+                                <Button Text="Confirmar"
+                                        BackgroundColor="#66A5ED"
+                                        TextColor="White"
+                                        FontSize="12"
+                                        CornerRadius="15"
+                                        Padding="10,5"
+                                        HorizontalOptions="End" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Border Grid.Row="3" BackgroundColor="White" StrokeShape="RoundRectangle 20,20,0,0"
+                StrokeThickness="0" VerticalOptions="EndAndExpand" Padding="0,5,0,5">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,-5" Radius="10" Opacity="0.2" />
+            </Border.Shadow>
+            <Grid ColumnDefinitions="*,*,*" HorizontalOptions="FillAndExpand">
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Image Source="home.png" HeightRequest="25" WidthRequest="25" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label Text="Início" FontSize="10" TextColor="#226487" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToHomeCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Image Source="add.png" HeightRequest="25" WidthRequest="25" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label Text="Adicionar" FontSize="10" TextColor="#226487" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToAddCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Image Source="heart.png" HeightRequest="25" WidthRequest="25" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label Text="Dicas" FontSize="10" TextColor="#226487" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToDicasCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+
+    </Grid>
+</ContentPage>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:eComunidade.ViewModels"
+             x:Class="eComunidade.Views.TelaAdicionar"
+             Title="Novo Post"
+             BackgroundColor="#EBF5FF"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <vm:AdicionarViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, *, 60">
+
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto, Auto" Padding="20, 30, 20, 10" BackgroundColor="#EBF5FF">
+
+            <Label Grid.Column="0" Text="Novo post" FontSize="28" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Start" />
+
+            <Image Grid.Column="1" Source="profile.png" WidthRequest="35" HeightRequest="35" Margin="0, 0, 15, 0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToProfileCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Image Grid.Column="2" Source="menu.png" WidthRequest="25" HeightRequest="25" VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenMenuCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+        </Grid>
+
+        <ScrollView Grid.Row="1" Padding="20, 10, 20, 10">
+            <VerticalStackLayout Spacing="25">
+
+                <Label Text="Categoria" FontSize="16" TextColor="#333333" />
+                <Frame Padding="0" 
+                       BackgroundColor="White" 
+                       CornerRadius="10" 
+                       HasShadow="False" 
+                       BorderColor="Transparent" 
+                       HeightRequest="50"
+                       WidthRequest="250" 
+                       HorizontalOptions="Start">
+                    <Grid ColumnDefinitions="*, Auto" Margin="15,0">
+                        <Picker Grid.Column="0" 
+                                ItemsSource="{Binding Categorias}"
+                                SelectedItem="{Binding CategoriaSelecionada}"
+                                TitleColor="#666666" 
+                                TextColor="#333333"
+                                VerticalOptions="Center"
+                                />
+                        <Image Grid.Column="1" Source="arrow_down.png" WidthRequest="15" HorizontalOptions="End" VerticalOptions="Center" />
+                    </Grid>
+                </Frame>
+
+                <Label Text="Descrição" FontSize="16" TextColor="#333333" />
+
+                <Frame Padding="10" BackgroundColor="White" CornerRadius="10" HasShadow="False" BorderColor="Transparent" HeightRequest="250">
+                    <Editor Placeholder="Digite o conteúdo do seu post aqui..."
+                            Text="{Binding ConteudoPost}"
+                            PlaceholderColor="#AAAAAA"
+                            TextColor="#333333"
+                            VerticalOptions="FillAndExpand" />
+                </Frame>
+
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0, 20, 0, 0">
+
+                    <Button Grid.Column="0" 
+                            Text="Rascunho" 
+                            Command="{Binding SalvarRascunhoCommand}"
+                            BackgroundColor="#89C4F4" 
+                            TextColor="White" 
+                            CornerRadius="25" 
+                            HeightRequest="50"
+                            FontSize="18" />
+
+                    <Button Grid.Column="1" 
+                            Text="Publicar" 
+                            Command="{Binding PublicarPostCommand}"
+                            BackgroundColor="#4A90E2" 
+                            TextColor="White" 
+                            CornerRadius="25" 
+                            HeightRequest="50"
+                            FontSize="18" />
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border Grid.Row="2" BackgroundColor="White" StrokeShape="RoundRectangle 40,40,0,0"
+                StrokeThickness="0" VerticalOptions="EndAndExpand" Padding="0,15,0,9">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,-5" Radius="10" Opacity="0.2" />
+            </Border.Shadow>
+            <Grid ColumnDefinitions="*,*,*" HorizontalOptions="FillAndExpand">
+
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Image Source="home.png" HeightRequest="23" WidthRequest="23" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label Text="Início" FontSize="10" TextColor="#226487" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToHomeCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Image Source="add.png" HeightRequest="23" WidthRequest="23" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label Text="Adicionar" FontSize="10" TextColor="#226487" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToAddCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Image Source="heart.png" HeightRequest="23" WidthRequest="23" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label Text="Dicas" FontSize="10" TextColor="#226487" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToDicasCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+            </Grid>
+        </Border>
+
+    </Grid>
+</ContentPage>

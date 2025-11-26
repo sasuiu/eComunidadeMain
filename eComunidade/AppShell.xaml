@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:eComunidade.Views"
+    x:Class="eComunidade.AppShell"
+    FlyoutBehavior="Flyout">
+
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate views:TelaLogin}"
+        Route="TelaLogin" />
+
+    <FlyoutItem Title="Início" Route="TelaHome">
+        <ShellContent ContentTemplate="{DataTemplate views:TelaHome}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Eventos" Route="TelaEventos">
+        <ShellContent ContentTemplate="{DataTemplate views:TelaEventos}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Ranking" Route="TelaRanking">
+        <ShellContent ContentTemplate="{DataTemplate views:TelaRanking}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Dicas" Route="TelaDicas">
+        <ShellContent ContentTemplate="{DataTemplate views:TelaDicas}" />
+    </FlyoutItem>
+
+    <MenuItem Text="Sair" Clicked="OnMenuItemClicked" />
+</Shell>

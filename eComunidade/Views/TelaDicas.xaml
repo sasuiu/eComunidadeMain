@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:eComunidade.ViewModels"
+             x:Class="eComunidade.Views.TelaDicas"
+             Title="Dicas"
+             BackgroundColor="#EBF5FF"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <vm:DicasViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, *, 60">
+
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto, Auto" Padding="20, 30, 20, 10" BackgroundColor="#EBF5FF">
+            <Image Grid.Column="0" Source="seta_voltar.png" WidthRequest="25" HeightRequest="25" Margin="0, 0, 15, 0" HorizontalOptions="Start">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoBackCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Label Grid.Column="1" Text="Dicas" FontSize="28" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center" />
+            <Image Grid.Column="2" Source="profile.png" WidthRequest="35" HeightRequest="35" Margin="0, 0, 15, 0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToProfileCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Grid.Column="3" Source="menu.png" WidthRequest="25" HeightRequest="25" VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenMenuCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+        </Grid>
+
+        <ScrollView Grid.Row="1" Padding="20, 10, 20, 10">
+            <VerticalStackLayout Spacing="25">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Destaques" FontSize="20" FontAttributes="Bold" TextColor="Black" Margin="0,0,0,5" />
+                    <CollectionView ItemsSource="{Binding DicasDestaque}" HeightRequest="200" ItemsLayout="HorizontalList">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="0,0,15,0" WidthRequest="280" BackgroundColor="White" StrokeShape="RoundRectangle 10" StrokeThickness="0" Padding="15">
+                                    <Border.Shadow>
+                                        <Shadow Brush="Gray" Offset="3,3" Radius="8" Opacity="0.3" />
+                                    </Border.Shadow>
+                                    <VerticalStackLayout Spacing="10">
+                                        <Label Text="{Binding Titulo}" FontSize="16" FontAttributes="Bold" TextColor="#226487" />
+                                        <Label Text="{Binding Descricao}" FontSize="12" TextColor="#333333" LineBreakMode="WordWrap" MaxLines="3" />
+                                        <HorizontalStackLayout Spacing="10" VerticalOptions="EndAndExpand">
+                                            <Label Text="Categoria:" FontSize="10" TextColor="#666666" />
+                                            <Label Text="{Binding Categoria}" FontSize="10" FontAttributes="Italic" TextColor="#999999" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Recentes" FontSize="20" FontAttributes="Bold" TextColor="Black" Margin="0,0,0,5" />
+                    <CollectionView ItemsSource="{Binding DicasRecentes}" SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="0,0,0,10" BackgroundColor="White" StrokeShape="RoundRectangle 10" StrokeThickness="0" Padding="15">
+                                    <Border.Shadow>
+                                        <Shadow Brush="Gray" Offset="0,3" Radius="5" Opacity="0.2" />
+                                    </Border.Shadow>
+                                    <VerticalStackLayout Spacing="10">
+                                        <Label Text="{Binding Titulo}" FontSize="16" FontAttributes="Bold" TextColor="#226487" />
+                                        <Label Text="{Binding Descricao}" FontSize="12" TextColor="#333333" LineBreakMode="WordWrap" MaxLines="2" />
+                                        <HorizontalStackLayout Spacing="10" VerticalOptions="EndAndExpand">
+                                            <Label Text="Categoria:" FontSize="10" TextColor="#666666" />
+                                            <Label Text="{Binding Categoria}" FontSize="10" FontAttributes="Italic" TextColor="#999999" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border Grid.Row="2" BackgroundColor="White" StrokeShape="RoundRectangle 40,40,0,0"
+                StrokeThickness="0" VerticalOptions="EndAndExpand" Padding="0,15,0,9">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,-5" Radius="10" Opacity="0.2" />
+            </Border.Shadow>
+            <Grid ColumnDefinitions="*,*,*" HorizontalOptions="FillAndExpand">
+
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Image Source="home.png" HeightRequest="23" WidthRequest="23" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label Text="Início" FontSize="10" TextColor="#226487" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToHomeCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Image Source="add.png" HeightRequest="23" WidthRequest="23" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label Text="Adicionar" FontSize="10" TextColor="#226487" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToAddCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                    <Image Source="heart.png" HeightRequest="23" WidthRequest="23" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label Text="Dicas" FontSize="10" TextColor="#226487" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToDicasCommand}" />
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+
+            </Grid>
+        </Border>
+
+    </Grid>
+</ContentPage>
