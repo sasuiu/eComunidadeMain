@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using eComunidade.Views; 
 
 namespace eComunidade.ViewModels
 {
     public partial class CadastroViewModel : ObservableObject
     {
-        // Propriedades para os campos do formulário
         [ObservableProperty]
         private string nome;
 
@@ -30,15 +30,22 @@ namespace eComunidade.ViewModels
         [RelayCommand]
         private async Task Cadastrar()
         {
-            // Lógica para validar e registrar o usuário
-            // await Shell.Current.GoToAsync($"//{nameof(Views.TelaHome)}");
+          
+            if (string.IsNullOrEmpty(Nome) || string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Senha))
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro de Cadastro", "Preencha todos os campos obrigatórios.", "OK");
+                return;
+            }
+
+            await Application.Current.MainPage.DisplayAlert("Sucesso", "Cadastro realizado! Faça login para continuar.", "OK");
+
+            await Shell.Current.GoToAsync($"//{nameof(TelaLogin)}");
         }
 
         [RelayCommand]
         private async Task ContinuarSemCadastro()
         {
-        
-            await Shell.Current.GoToAsync($"//{nameof(Views.TelaHome)}");
+            await Shell.Current.GoToAsync($"//{nameof(TelaHome)}");
         }
     }
 }
