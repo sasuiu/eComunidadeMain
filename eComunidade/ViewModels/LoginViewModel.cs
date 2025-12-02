@@ -27,14 +27,13 @@ namespace eComunidade.ViewModels
             await Shell.Current.DisplayAlert("Login", $"Logando com {Email}", "OK");
 
 
-            await Shell.Current.GoToAsync("TelaHome");
+            
+            await Shell.Current.GoToAsync("//TelaHome");
         }
 
         [RelayCommand]
         private async Task NavigateToRegister()
         {
-            // O comando "NavigateToRegisterCommand" no XAML irá chamar este método.
-            // O aplicativo navegará para a rota "TelaCadastro".
             await Shell.Current.GoToAsync(nameof(TelaCadastro));
         }
     }
