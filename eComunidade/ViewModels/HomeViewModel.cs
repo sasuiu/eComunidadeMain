@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using eComunidade.Views;
 using Microsoft.Maui.Controls;
+using System.Collections.ObjectModel;
 
 namespace eComunidade.ViewModels
 {
@@ -10,9 +11,27 @@ namespace eComunidade.ViewModels
         [ObservableProperty]
         private string? nomeUsuario;
 
+        // propriedade para o Carrossel 
+        private ObservableCollection<string> bannerImages;
+        public ObservableCollection<string> BannerImages
+        {
+            get => bannerImages;
+            set => SetProperty(ref bannerImages, value);
+        }
+
         public HomeViewModel()
         {
-            NomeUsuario = "Olá, Usuário!";
+            NomeUsuario = "Olá!";
+
+            bannerImages = new ObservableCollection<string>
+            {
+                "banner_image_01.png",
+                "banner_image_02.jpg",
+                "banner_image_03.png",
+                "banner_image_04.png",
+                "banner_image_05.png"
+            };
+
         }
 
         [RelayCommand]
@@ -21,7 +40,6 @@ namespace eComunidade.ViewModels
             Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
         }
 
-        // comandos de navegação
         [RelayCommand]
         private async Task NavigateToProfile()
         {
@@ -31,21 +49,18 @@ namespace eComunidade.ViewModels
         [RelayCommand]
         private async Task NavigateToEvents()
         {
-          
             await Shell.Current.GoToAsync($"{nameof(TelaEventos)}");
         }
 
         [RelayCommand]
         private async Task NavigateToOccurrences()
         {
-            
             await Shell.Current.GoToAsync($"{nameof(TelaOcorrencias)}");
         }
 
         [RelayCommand]
         private async Task NavigateToRanking()
         {
-           
             await Shell.Current.GoToAsync($"{nameof(TelaRanking)}");
         }
 
@@ -58,14 +73,12 @@ namespace eComunidade.ViewModels
         [RelayCommand]
         private async Task NavigateToHome()
         {
-            
             await Shell.Current.GoToAsync($"{nameof(TelaHome)}");
         }
 
         [RelayCommand]
         private async Task NavigateToAdd()
         {
-            
             await Shell.Current.GoToAsync($"{nameof(TelaAdicionar)}");
         }
     }

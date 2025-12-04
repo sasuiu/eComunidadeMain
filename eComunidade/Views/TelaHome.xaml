@@ -30,7 +30,6 @@
                 </Image>
             </HorizontalStackLayout>
         </Grid>
-
         <Label Grid.Row="1" Text="{Binding NomeUsuario}" FontSize="18" TextColor="#333333" Margin="20,10,10,60" />
 
         <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" Margin="0,10,0,40" Spacing="15">
@@ -71,13 +70,34 @@
             <Border.Shadow>
                 <Shadow Brush="Black" Offset="10,10" Radius="10" Opacity="0.2" />
             </Border.Shadow>
-            <StackLayout VerticalOptions="End" HorizontalOptions="Center" Margin="0,0,0,10" Orientation="Horizontal" Spacing="25">
-                <BoxView Color="#66A5ED" WidthRequest="25" HeightRequest="5" CornerRadius="3" />
-                <BoxView Color="#ADD8E6" WidthRequest="25" HeightRequest="5" CornerRadius="3" />
-                <BoxView Color="#ADD8E6" WidthRequest="25" HeightRequest="5" CornerRadius="3" />
-                <BoxView Color="#ADD8E6" WidthRequest="25" HeightRequest="5" CornerRadius="3" />
-                <BoxView Color="#ADD8E6" WidthRequest="25" HeightRequest="5" CornerRadius="3" />
-            </StackLayout>
+
+            <Grid RowDefinitions="*, Auto">
+                <CarouselView x:Name="CarouselImage" 
+                              Grid.Row="0"
+                              ItemsSource="{Binding BannerImages}"
+                              IndicatorView="{x:Reference Indicators}"
+                              Loop="True"
+                              IsSwipeEnabled="True"
+                              VerticalOptions="FillAndExpand"
+                              HorizontalOptions="FillAndExpand">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding .}" 
+                                   Aspect="AspectFill" 
+                                   VerticalOptions="FillAndExpand" 
+                                   HorizontalOptions="FillAndExpand"/>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+
+                <IndicatorView x:Name="Indicators"
+                               Grid.Row="1"
+                               Margin="0,0,0,10"
+                               IndicatorColor="#ADD8E6"
+                               SelectedIndicatorColor="#226487"
+                               IndicatorSize="10"
+                               HorizontalOptions="Center" />
+            </Grid>
         </Border>
 
         <Border Grid.Row="4" BackgroundColor="White" StrokeShape="RoundRectangle 40,40,0,0"
@@ -93,7 +113,6 @@
                         <TapGestureRecognizer Command="{Binding NavigateToHomeCommand}" />
                     </VerticalStackLayout.GestureRecognizers>
                 </VerticalStackLayout>
-
                 <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
                     <Image Source="add.png" HeightRequest="23" WidthRequest="23" HorizontalOptions="Center" VerticalOptions="Center" />
                     <Label Text="Adicionar" FontSize="10" TextColor="#226487" HorizontalOptions="Center" />
@@ -101,7 +120,6 @@
                         <TapGestureRecognizer Command="{Binding NavigateToAddCommand}" />
                     </VerticalStackLayout.GestureRecognizers>
                 </VerticalStackLayout>
-
                 <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
                     <Image Source="heart.png" HeightRequest="23" WidthRequest="23" HorizontalOptions="Center" VerticalOptions="Center" />
                     <Label Text="Dicas" FontSize="10" TextColor="#226487" HorizontalOptions="Center" />
@@ -111,6 +129,5 @@
                 </VerticalStackLayout>
             </Grid>
         </Border>
-
     </Grid>
 </ContentPage>
