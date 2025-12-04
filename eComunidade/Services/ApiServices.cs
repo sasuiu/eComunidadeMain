@@ -17,11 +17,11 @@ namespace eComunidade.Services
             string baseUrl;
 
 #if ANDROID
-    // Emulador Android acessa o PC assim:
-    baseUrl = "http://10.0.2.2:5119";
+    // Android emulator: usa o localhost do PC via 10.0.2.2 e HTTP (evita problemas com certificado)
+    baseUrl = "https://ecomunidadeapi.azurewebsites.net";
 #else
-            // Windows / iOS / Mac
-            baseUrl = "https://localhost:5119";
+            // Windows / iOS / Mac - use HTTPS (porta do launchSettings)
+            baseUrl = "https://ecomunidadeapi.azurewebsites.net";
 #endif
 
             _http = new HttpClient
@@ -30,6 +30,7 @@ namespace eComunidade.Services
                 Timeout = TimeSpan.FromSeconds(20)
             };
         }
+
 
 
         public void SetBearerToken(string token)
@@ -128,6 +129,9 @@ namespace eComunidade.Services
         public Task<(bool ok, string? error)> CriarUsuario(Usuario u) =>
             PostResultAsync("/api/usuario", u);
 
+        public Task<(bool ok, string? error)> LogarUsuario(Usuario u) =>
+            PostResultAsync("/api/usuario/login", u);
+
         public Task<(bool ok, string? error)> AtualizarUsuario(int id, Usuario u) =>
             PutResultAsync($"/api/usuario/{id}", u);
 
@@ -138,7 +142,7 @@ namespace eComunidade.Services
         public async Task<(bool ok, string? tokenOrError)> Login(string email, string senha)
         {
             var payload = new { Email = email, Senha = senha };
-            var res = await _http.PostAsJsonAsync("/api/usuario/login", payload);
+            var res = await _http.PostAsJsonAsync(_http.BaseAddress + "api/usuario/login", payload);
             if (res.IsSuccessStatusCode)
             {
                 var token = await res.Content.ReadFromJsonAsync<string?>();

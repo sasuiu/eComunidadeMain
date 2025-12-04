@@ -13,10 +13,6 @@
         <converters:TipoToColorConverter x:Key="TipoToColorConverter" />
     </ContentPage.Resources>
 
-    <ContentPage.BindingContext>
-        <vm:OcorrenciasViewModel />
-    </ContentPage.BindingContext>
-
     <Grid RowDefinitions="Auto, Auto, *, 60"
           ColumnDefinitions="*"
           RowSpacing="0"

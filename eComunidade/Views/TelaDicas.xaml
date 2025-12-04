@@ -7,9 +7,6 @@
              BackgroundColor="#EBF5FF"
              Shell.NavBarIsVisible="False">
 
-    <ContentPage.BindingContext>
-        <vm:DicasViewModel />
-    </ContentPage.BindingContext>
 
     <Grid RowDefinitions="Auto, *, 60">
 
