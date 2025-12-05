@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:eComunidade.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="eComunidade.Views.TelaCadastro"
              Title="Cadastro"
              BackgroundColor="#2A6487"
@@ -39,6 +40,10 @@
 
                     <Border BackgroundColor="#F0F8FF" StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#DDDDDD" Padding="10,5">
                         <Entry Placeholder="Senha" Text="{Binding Senha}" IsPassword="True" PlaceholderColor="#AAAAAA" />
+                    </Border>
+
+                    <Border BackgroundColor="#F0F8FF" StrokeShape="RoundRectangle 10" StrokeThickness="1" Stroke="#DDDDDD" Padding="10,5">
+                        <DatePicker Date="{Binding Data_Nascimento}" Format="dd/MM/yyyy" />
                     </Border>
 
                     <Button Text="Cadastrar"

@@ -15,5 +15,6 @@ namespace eComunidade.Models
         public string? Senha { get; set; }
         public string? Celular { get; set; }
         public string? Cep { get; set; }
+        public DateTime? Data_Nascimento { get; set; }
     }
 }

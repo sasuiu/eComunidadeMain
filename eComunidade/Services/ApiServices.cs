@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using eComunidade.Models;
 
@@ -31,7 +32,32 @@ namespace eComunidade.Services
             };
         }
 
+        private string ExtrairErroAmigavel(string json)
+        {
+            try
+            {
+                using var doc = JsonDocument.Parse(json);
 
+                if (doc.RootElement.TryGetProperty("errors", out var errorsElement))
+                {
+                    var mensagens = new List<string>();
+
+                    foreach (var prop in errorsElement.EnumerateObject())
+                    {
+                        foreach (var msg in prop.Value.EnumerateArray())
+                            mensagens.Add(msg.GetString()!);
+                    }
+
+                    return string.Join("\n", mensagens);
+                }
+            }
+            catch
+            {
+                // Se der erro no parse, devolve o texto bruto
+            }
+
+            return json;
+        }
 
         public void SetBearerToken(string token)
         {
@@ -49,24 +75,35 @@ namespace eComunidade.Services
         private async Task<(bool ok, string? error)> PostResultAsync<T>(string path, T obj)
         {
             var res = await _http.PostAsJsonAsync(path, obj);
-            if (res.IsSuccessStatusCode) return (true, null);
+            if (res.IsSuccessStatusCode) 
+                return (true, null);
+
             var txt = await res.Content.ReadAsStringAsync();
+
+            txt = ExtrairErroAmigavel(txt);
+
             return (false, txt);
         }
 
         private async Task<(bool ok, string? error)> PutResultAsync<T>(string path, T obj)
         {
             var res = await _http.PutAsJsonAsync(path, obj);
-            if (res.IsSuccessStatusCode) return (true, null);
+            if (res.IsSuccessStatusCode) 
+               return (true, null);
+
             var txt = await res.Content.ReadAsStringAsync();
+
             return (false, txt);
         }
 
         private async Task<(bool ok, string? error)> DeleteResultAsync(string path)
         {
             var res = await _http.DeleteAsync(path);
-            if (res.IsSuccessStatusCode) return (true, null);
+            if (res.IsSuccessStatusCode) 
+                return (true, null);
+
             var txt = await res.Content.ReadAsStringAsync();
+
             return (false, txt);
         }
 
@@ -127,7 +164,7 @@ namespace eComunidade.Services
             => await _http.GetFromJsonAsync<Usuario>($"/api/usuario/{id}");
 
         public Task<(bool ok, string? error)> CriarUsuario(Usuario u) =>
-            PostResultAsync("/api/usuario", u);
+            PostResultAsync("/api/usuario/cadastro", u);
 
         public Task<(bool ok, string? error)> LogarUsuario(Usuario u) =>
             PostResultAsync("/api/usuario/login", u);
@@ -142,7 +179,7 @@ namespace eComunidade.Services
         public async Task<(bool ok, string? tokenOrError)> Login(string email, string senha)
         {
             var payload = new { Email = email, Senha = senha };
-            var res = await _http.PostAsJsonAsync(_http.BaseAddress + "api/usuario/login", payload);
+            var res = await _http.PostAsJsonAsync(_http.BaseAddress + "api/usuarios/login", payload);
             if (res.IsSuccessStatusCode)
             {
                 var token = await res.Content.ReadFromJsonAsync<string?>();
